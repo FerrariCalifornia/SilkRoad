@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.dao.RegulationRepoMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.pojo.RegulationRepo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="doi" property="doi" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="date_publication" property="datePublication" jdbcType="DATE" />
+    <result column="online_isbn" property="onlineIsbn" jdbcType="VARCHAR" />
+    <result column="author_keywords" property="authorKeywords" jdbcType="VARCHAR" />
+    <result column="definition" property="definition" jdbcType="VARCHAR" />
+    <result column="full_text" property="fullText" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cc.pojo.RegulationRepoWithBLOBs" extends="BaseResultMap" >
+    <result column="abstract_a" property="abstractA" jdbcType="LONGVARCHAR" />
+    <result column="scope" property="scope" jdbcType="LONGVARCHAR" />
+    <result column="purpose" property="purpose" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, doi, url, title, status, date_publication, online_isbn, author_keywords, definition, 
+    full_text
+  </sql>
+  <sql id="Blob_Column_List" >
+    abstract_a, scope, purpose
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.cc.pojo.RegulationRepoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from regulation_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.pojo.RegulationRepoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from regulation_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from regulation_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from regulation_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.pojo.RegulationRepoExample" >
+    delete from regulation_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.pojo.RegulationRepoWithBLOBs" >
+    insert into regulation_repo (id, doi, url, 
+      title, status, date_publication, 
+      online_isbn, author_keywords, definition, 
+      full_text, abstract_a, scope, 
+      purpose)
+    values (#{id,jdbcType=VARCHAR}, #{doi,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{datePublication,jdbcType=DATE}, 
+      #{onlineIsbn,jdbcType=VARCHAR}, #{authorKeywords,jdbcType=VARCHAR}, #{definition,jdbcType=VARCHAR}, 
+      #{fullText,jdbcType=VARCHAR}, #{abstractA,jdbcType=LONGVARCHAR}, #{scope,jdbcType=LONGVARCHAR}, 
+      #{purpose,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.pojo.RegulationRepoWithBLOBs" >
+    insert into regulation_repo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="doi != null" >
+        doi,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="datePublication != null" >
+        date_publication,
+      </if>
+      <if test="onlineIsbn != null" >
+        online_isbn,
+      </if>
+      <if test="authorKeywords != null" >
+        author_keywords,
+      </if>
+      <if test="definition != null" >
+        definition,
+      </if>
+      <if test="fullText != null" >
+        full_text,
+      </if>
+      <if test="abstractA != null" >
+        abstract_a,
+      </if>
+      <if test="scope != null" >
+        scope,
+      </if>
+      <if test="purpose != null" >
+        purpose,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="doi != null" >
+        #{doi,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="datePublication != null" >
+        #{datePublication,jdbcType=DATE},
+      </if>
+      <if test="onlineIsbn != null" >
+        #{onlineIsbn,jdbcType=VARCHAR},
+      </if>
+      <if test="authorKeywords != null" >
+        #{authorKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="definition != null" >
+        #{definition,jdbcType=VARCHAR},
+      </if>
+      <if test="fullText != null" >
+        #{fullText,jdbcType=VARCHAR},
+      </if>
+      <if test="abstractA != null" >
+        #{abstractA,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scope != null" >
+        #{scope,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="purpose != null" >
+        #{purpose,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.pojo.RegulationRepoExample" resultType="java.lang.Integer" >
+    select count(*) from regulation_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update regulation_repo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doi != null" >
+        doi = #{record.doi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datePublication != null" >
+        date_publication = #{record.datePublication,jdbcType=DATE},
+      </if>
+      <if test="record.onlineIsbn != null" >
+        online_isbn = #{record.onlineIsbn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorKeywords != null" >
+        author_keywords = #{record.authorKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.definition != null" >
+        definition = #{record.definition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullText != null" >
+        full_text = #{record.fullText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.abstractA != null" >
+        abstract_a = #{record.abstractA,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.scope != null" >
+        scope = #{record.scope,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.purpose != null" >
+        purpose = #{record.purpose,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update regulation_repo
+    set id = #{record.id,jdbcType=VARCHAR},
+      doi = #{record.doi,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      date_publication = #{record.datePublication,jdbcType=DATE},
+      online_isbn = #{record.onlineIsbn,jdbcType=VARCHAR},
+      author_keywords = #{record.authorKeywords,jdbcType=VARCHAR},
+      definition = #{record.definition,jdbcType=VARCHAR},
+      full_text = #{record.fullText,jdbcType=VARCHAR},
+      abstract_a = #{record.abstractA,jdbcType=LONGVARCHAR},
+      scope = #{record.scope,jdbcType=LONGVARCHAR},
+      purpose = #{record.purpose,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update regulation_repo
+    set id = #{record.id,jdbcType=VARCHAR},
+      doi = #{record.doi,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      date_publication = #{record.datePublication,jdbcType=DATE},
+      online_isbn = #{record.onlineIsbn,jdbcType=VARCHAR},
+      author_keywords = #{record.authorKeywords,jdbcType=VARCHAR},
+      definition = #{record.definition,jdbcType=VARCHAR},
+      full_text = #{record.fullText,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.pojo.RegulationRepoWithBLOBs" >
+    update regulation_repo
+    <set >
+      <if test="doi != null" >
+        doi = #{doi,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="datePublication != null" >
+        date_publication = #{datePublication,jdbcType=DATE},
+      </if>
+      <if test="onlineIsbn != null" >
+        online_isbn = #{onlineIsbn,jdbcType=VARCHAR},
+      </if>
+      <if test="authorKeywords != null" >
+        author_keywords = #{authorKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="definition != null" >
+        definition = #{definition,jdbcType=VARCHAR},
+      </if>
+      <if test="fullText != null" >
+        full_text = #{fullText,jdbcType=VARCHAR},
+      </if>
+      <if test="abstractA != null" >
+        abstract_a = #{abstractA,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scope != null" >
+        scope = #{scope,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="purpose != null" >
+        purpose = #{purpose,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cc.pojo.RegulationRepoWithBLOBs" >
+    update regulation_repo
+    set doi = #{doi,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      date_publication = #{datePublication,jdbcType=DATE},
+      online_isbn = #{onlineIsbn,jdbcType=VARCHAR},
+      author_keywords = #{authorKeywords,jdbcType=VARCHAR},
+      definition = #{definition,jdbcType=VARCHAR},
+      full_text = #{fullText,jdbcType=VARCHAR},
+      abstract_a = #{abstractA,jdbcType=LONGVARCHAR},
+      scope = #{scope,jdbcType=LONGVARCHAR},
+      purpose = #{purpose,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.pojo.RegulationRepo" >
+    update regulation_repo
+    set doi = #{doi,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      date_publication = #{datePublication,jdbcType=DATE},
+      online_isbn = #{onlineIsbn,jdbcType=VARCHAR},
+      author_keywords = #{authorKeywords,jdbcType=VARCHAR},
+      definition = #{definition,jdbcType=VARCHAR},
+      full_text = #{fullText,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAll" resultType="com.cc.pojo.RegulationRepo">
+    SELECT * from regulation_repo
+  </select>
+</mapper>

@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.dao.UansrRepoMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.pojo.UansrRepo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="orginal_publication" property="orginalPublication" jdbcType="VARCHAR" />
+    <result column="volume" property="volume" jdbcType="VARCHAR" />
+    <result column="issue" property="issue" jdbcType="VARCHAR" />
+    <result column="paper_id" property="paperId" jdbcType="INTEGER" />
+    <result column="start_page" property="startPage" jdbcType="INTEGER" />
+    <result column="end_page" property="endPage" jdbcType="INTEGER" />
+    <result column="page_counter" property="pageCounter" jdbcType="INTEGER" />
+    <result column="citing_paper" property="citingPaper" jdbcType="VARCHAR" />
+    <result column="doi" property="doi" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="institution_owner" property="institutionOwner" jdbcType="VARCHAR" />
+    <result column="author_with_institution" property="authorWithInstitution" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="author_keyword" property="authorKeyword" jdbcType="VARCHAR" />
+    <result column="index_keyword" property="indexKeyword" jdbcType="VARCHAR" />
+    <result column="analysis_serial_number" property="analysisSerialNumber" jdbcType="VARCHAR" />
+    <result column="cas" property="cas" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="manufacturer" property="manufacturer" jdbcType="VARCHAR" />
+    <result column="funding_info" property="fundingInfo" jdbcType="VARCHAR" />
+    <result column="reference" property="reference" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="editor" property="editor" jdbcType="VARCHAR" />
+    <result column="funding_agent" property="fundingAgent" jdbcType="VARCHAR" />
+    <result column="publisher" property="publisher" jdbcType="VARCHAR" />
+    <result column="conference_title" property="conferenceTitle" jdbcType="VARCHAR" />
+    <result column="conference_date" property="conferenceDate" jdbcType="TIMESTAMP" />
+    <result column="conference_location" property="conferenceLocation" jdbcType="VARCHAR" />
+    <result column="conference_code" property="conferenceCode" jdbcType="VARCHAR" />
+    <result column="issn" property="issn" jdbcType="VARCHAR" />
+    <result column="isbn" property="isbn" jdbcType="VARCHAR" />
+    <result column="coden" property="coden" jdbcType="VARCHAR" />
+    <result column="pubmed_id" property="pubmedId" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="orginal_publication_abbr" property="orginalPublicationAbbr" jdbcType="VARCHAR" />
+    <result column="paper_type" property="paperType" jdbcType="VARCHAR" />
+    <result column="source_of_publication" property="sourceOfPublication" jdbcType="VARCHAR" />
+    <result column="eid" property="eid" jdbcType="VARCHAR" />
+    <result column="paper_subject" property="paperSubject" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, author, title, year, orginal_publication, volume, issue, paper_id, start_page, 
+    end_page, page_counter, citing_paper, doi, url, institution_owner, author_with_institution, 
+    summary, author_keyword, index_keyword, analysis_serial_number, cas, brand, manufacturer, 
+    funding_info, reference, address, editor, funding_agent, publisher, conference_title, 
+    conference_date, conference_location, conference_code, issn, isbn, coden, pubmed_id, 
+    language, orginal_publication_abbr, paper_type, source_of_publication, eid, paper_subject
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.pojo.UansrRepoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from uansr_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from uansr_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from uansr_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.pojo.UansrRepoExample" >
+    delete from uansr_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.pojo.UansrRepo" >
+    insert into uansr_repo (id, author, title, 
+      year, orginal_publication, volume, 
+      issue, paper_id, start_page, 
+      end_page, page_counter, citing_paper, 
+      doi, url, institution_owner, 
+      author_with_institution, summary, author_keyword, 
+      index_keyword, analysis_serial_number, cas, 
+      brand, manufacturer, funding_info, 
+      reference, address, editor, 
+      funding_agent, publisher, conference_title, 
+      conference_date, conference_location, conference_code, 
+      issn, isbn, coden, 
+      pubmed_id, language, orginal_publication_abbr, 
+      paper_type, source_of_publication, eid, 
+      paper_subject)
+    values (#{id,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{year,jdbcType=INTEGER}, #{orginalPublication,jdbcType=VARCHAR}, #{volume,jdbcType=VARCHAR}, 
+      #{issue,jdbcType=VARCHAR}, #{paperId,jdbcType=INTEGER}, #{startPage,jdbcType=INTEGER}, 
+      #{endPage,jdbcType=INTEGER}, #{pageCounter,jdbcType=INTEGER}, #{citingPaper,jdbcType=VARCHAR}, 
+      #{doi,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{institutionOwner,jdbcType=VARCHAR}, 
+      #{authorWithInstitution,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{authorKeyword,jdbcType=VARCHAR}, 
+      #{indexKeyword,jdbcType=VARCHAR}, #{analysisSerialNumber,jdbcType=VARCHAR}, #{cas,jdbcType=VARCHAR}, 
+      #{brand,jdbcType=VARCHAR}, #{manufacturer,jdbcType=VARCHAR}, #{fundingInfo,jdbcType=VARCHAR}, 
+      #{reference,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}, 
+      #{fundingAgent,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR}, #{conferenceTitle,jdbcType=VARCHAR}, 
+      #{conferenceDate,jdbcType=TIMESTAMP}, #{conferenceLocation,jdbcType=VARCHAR}, #{conferenceCode,jdbcType=VARCHAR}, 
+      #{issn,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, #{coden,jdbcType=VARCHAR}, 
+      #{pubmedId,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{orginalPublicationAbbr,jdbcType=VARCHAR}, 
+      #{paperType,jdbcType=VARCHAR}, #{sourceOfPublication,jdbcType=VARCHAR}, #{eid,jdbcType=VARCHAR}, 
+      #{paperSubject,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.pojo.UansrRepo" >
+    insert into uansr_repo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="orginalPublication != null" >
+        orginal_publication,
+      </if>
+      <if test="volume != null" >
+        volume,
+      </if>
+      <if test="issue != null" >
+        issue,
+      </if>
+      <if test="paperId != null" >
+        paper_id,
+      </if>
+      <if test="startPage != null" >
+        start_page,
+      </if>
+      <if test="endPage != null" >
+        end_page,
+      </if>
+      <if test="pageCounter != null" >
+        page_counter,
+      </if>
+      <if test="citingPaper != null" >
+        citing_paper,
+      </if>
+      <if test="doi != null" >
+        doi,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="institutionOwner != null" >
+        institution_owner,
+      </if>
+      <if test="authorWithInstitution != null" >
+        author_with_institution,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="authorKeyword != null" >
+        author_keyword,
+      </if>
+      <if test="indexKeyword != null" >
+        index_keyword,
+      </if>
+      <if test="analysisSerialNumber != null" >
+        analysis_serial_number,
+      </if>
+      <if test="cas != null" >
+        cas,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="manufacturer != null" >
+        manufacturer,
+      </if>
+      <if test="fundingInfo != null" >
+        funding_info,
+      </if>
+      <if test="reference != null" >
+        reference,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="editor != null" >
+        editor,
+      </if>
+      <if test="fundingAgent != null" >
+        funding_agent,
+      </if>
+      <if test="publisher != null" >
+        publisher,
+      </if>
+      <if test="conferenceTitle != null" >
+        conference_title,
+      </if>
+      <if test="conferenceDate != null" >
+        conference_date,
+      </if>
+      <if test="conferenceLocation != null" >
+        conference_location,
+      </if>
+      <if test="conferenceCode != null" >
+        conference_code,
+      </if>
+      <if test="issn != null" >
+        issn,
+      </if>
+      <if test="isbn != null" >
+        isbn,
+      </if>
+      <if test="coden != null" >
+        coden,
+      </if>
+      <if test="pubmedId != null" >
+        pubmed_id,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="orginalPublicationAbbr != null" >
+        orginal_publication_abbr,
+      </if>
+      <if test="paperType != null" >
+        paper_type,
+      </if>
+      <if test="sourceOfPublication != null" >
+        source_of_publication,
+      </if>
+      <if test="eid != null" >
+        eid,
+      </if>
+      <if test="paperSubject != null" >
+        paper_subject,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="orginalPublication != null" >
+        #{orginalPublication,jdbcType=VARCHAR},
+      </if>
+      <if test="volume != null" >
+        #{volume,jdbcType=VARCHAR},
+      </if>
+      <if test="issue != null" >
+        #{issue,jdbcType=VARCHAR},
+      </if>
+      <if test="paperId != null" >
+        #{paperId,jdbcType=INTEGER},
+      </if>
+      <if test="startPage != null" >
+        #{startPage,jdbcType=INTEGER},
+      </if>
+      <if test="endPage != null" >
+        #{endPage,jdbcType=INTEGER},
+      </if>
+      <if test="pageCounter != null" >
+        #{pageCounter,jdbcType=INTEGER},
+      </if>
+      <if test="citingPaper != null" >
+        #{citingPaper,jdbcType=VARCHAR},
+      </if>
+      <if test="doi != null" >
+        #{doi,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionOwner != null" >
+        #{institutionOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="authorWithInstitution != null" >
+        #{authorWithInstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="authorKeyword != null" >
+        #{authorKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="indexKeyword != null" >
+        #{indexKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="analysisSerialNumber != null" >
+        #{analysisSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cas != null" >
+        #{cas,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null" >
+        #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingInfo != null" >
+        #{fundingInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="reference != null" >
+        #{reference,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null" >
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingAgent != null" >
+        #{fundingAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="conferenceTitle != null" >
+        #{conferenceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="conferenceDate != null" >
+        #{conferenceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="conferenceLocation != null" >
+        #{conferenceLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="conferenceCode != null" >
+        #{conferenceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="issn != null" >
+        #{issn,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null" >
+        #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="coden != null" >
+        #{coden,jdbcType=VARCHAR},
+      </if>
+      <if test="pubmedId != null" >
+        #{pubmedId,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="orginalPublicationAbbr != null" >
+        #{orginalPublicationAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="paperType != null" >
+        #{paperType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceOfPublication != null" >
+        #{sourceOfPublication,jdbcType=VARCHAR},
+      </if>
+      <if test="eid != null" >
+        #{eid,jdbcType=VARCHAR},
+      </if>
+      <if test="paperSubject != null" >
+        #{paperSubject,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.pojo.UansrRepoExample" resultType="java.lang.Integer" >
+    select count(*) from uansr_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update uansr_repo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.orginalPublication != null" >
+        orginal_publication = #{record.orginalPublication,jdbcType=VARCHAR},
+      </if>
+      <if test="record.volume != null" >
+        volume = #{record.volume,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issue != null" >
+        issue = #{record.issue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperId != null" >
+        paper_id = #{record.paperId,jdbcType=INTEGER},
+      </if>
+      <if test="record.startPage != null" >
+        start_page = #{record.startPage,jdbcType=INTEGER},
+      </if>
+      <if test="record.endPage != null" >
+        end_page = #{record.endPage,jdbcType=INTEGER},
+      </if>
+      <if test="record.pageCounter != null" >
+        page_counter = #{record.pageCounter,jdbcType=INTEGER},
+      </if>
+      <if test="record.citingPaper != null" >
+        citing_paper = #{record.citingPaper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doi != null" >
+        doi = #{record.doi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.institutionOwner != null" >
+        institution_owner = #{record.institutionOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorWithInstitution != null" >
+        author_with_institution = #{record.authorWithInstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorKeyword != null" >
+        author_keyword = #{record.authorKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.indexKeyword != null" >
+        index_keyword = #{record.indexKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.analysisSerialNumber != null" >
+        analysis_serial_number = #{record.analysisSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cas != null" >
+        cas = #{record.cas,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brand != null" >
+        brand = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manufacturer != null" >
+        manufacturer = #{record.manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundingInfo != null" >
+        funding_info = #{record.fundingInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reference != null" >
+        reference = #{record.reference,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editor != null" >
+        editor = #{record.editor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundingAgent != null" >
+        funding_agent = #{record.fundingAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publisher != null" >
+        publisher = #{record.publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conferenceTitle != null" >
+        conference_title = #{record.conferenceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conferenceDate != null" >
+        conference_date = #{record.conferenceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.conferenceLocation != null" >
+        conference_location = #{record.conferenceLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conferenceCode != null" >
+        conference_code = #{record.conferenceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issn != null" >
+        issn = #{record.issn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isbn != null" >
+        isbn = #{record.isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coden != null" >
+        coden = #{record.coden,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pubmedId != null" >
+        pubmed_id = #{record.pubmedId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.language != null" >
+        language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orginalPublicationAbbr != null" >
+        orginal_publication_abbr = #{record.orginalPublicationAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperType != null" >
+        paper_type = #{record.paperType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceOfPublication != null" >
+        source_of_publication = #{record.sourceOfPublication,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eid != null" >
+        eid = #{record.eid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperSubject != null" >
+        paper_subject = #{record.paperSubject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update uansr_repo
+    set id = #{record.id,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      orginal_publication = #{record.orginalPublication,jdbcType=VARCHAR},
+      volume = #{record.volume,jdbcType=VARCHAR},
+      issue = #{record.issue,jdbcType=VARCHAR},
+      paper_id = #{record.paperId,jdbcType=INTEGER},
+      start_page = #{record.startPage,jdbcType=INTEGER},
+      end_page = #{record.endPage,jdbcType=INTEGER},
+      page_counter = #{record.pageCounter,jdbcType=INTEGER},
+      citing_paper = #{record.citingPaper,jdbcType=VARCHAR},
+      doi = #{record.doi,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      institution_owner = #{record.institutionOwner,jdbcType=VARCHAR},
+      author_with_institution = #{record.authorWithInstitution,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      author_keyword = #{record.authorKeyword,jdbcType=VARCHAR},
+      index_keyword = #{record.indexKeyword,jdbcType=VARCHAR},
+      analysis_serial_number = #{record.analysisSerialNumber,jdbcType=VARCHAR},
+      cas = #{record.cas,jdbcType=VARCHAR},
+      brand = #{record.brand,jdbcType=VARCHAR},
+      manufacturer = #{record.manufacturer,jdbcType=VARCHAR},
+      funding_info = #{record.fundingInfo,jdbcType=VARCHAR},
+      reference = #{record.reference,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      editor = #{record.editor,jdbcType=VARCHAR},
+      funding_agent = #{record.fundingAgent,jdbcType=VARCHAR},
+      publisher = #{record.publisher,jdbcType=VARCHAR},
+      conference_title = #{record.conferenceTitle,jdbcType=VARCHAR},
+      conference_date = #{record.conferenceDate,jdbcType=TIMESTAMP},
+      conference_location = #{record.conferenceLocation,jdbcType=VARCHAR},
+      conference_code = #{record.conferenceCode,jdbcType=VARCHAR},
+      issn = #{record.issn,jdbcType=VARCHAR},
+      isbn = #{record.isbn,jdbcType=VARCHAR},
+      coden = #{record.coden,jdbcType=VARCHAR},
+      pubmed_id = #{record.pubmedId,jdbcType=VARCHAR},
+      language = #{record.language,jdbcType=VARCHAR},
+      orginal_publication_abbr = #{record.orginalPublicationAbbr,jdbcType=VARCHAR},
+      paper_type = #{record.paperType,jdbcType=VARCHAR},
+      source_of_publication = #{record.sourceOfPublication,jdbcType=VARCHAR},
+      eid = #{record.eid,jdbcType=VARCHAR},
+      paper_subject = #{record.paperSubject,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.pojo.UansrRepo" >
+    update uansr_repo
+    <set >
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="orginalPublication != null" >
+        orginal_publication = #{orginalPublication,jdbcType=VARCHAR},
+      </if>
+      <if test="volume != null" >
+        volume = #{volume,jdbcType=VARCHAR},
+      </if>
+      <if test="issue != null" >
+        issue = #{issue,jdbcType=VARCHAR},
+      </if>
+      <if test="paperId != null" >
+        paper_id = #{paperId,jdbcType=INTEGER},
+      </if>
+      <if test="startPage != null" >
+        start_page = #{startPage,jdbcType=INTEGER},
+      </if>
+      <if test="endPage != null" >
+        end_page = #{endPage,jdbcType=INTEGER},
+      </if>
+      <if test="pageCounter != null" >
+        page_counter = #{pageCounter,jdbcType=INTEGER},
+      </if>
+      <if test="citingPaper != null" >
+        citing_paper = #{citingPaper,jdbcType=VARCHAR},
+      </if>
+      <if test="doi != null" >
+        doi = #{doi,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionOwner != null" >
+        institution_owner = #{institutionOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="authorWithInstitution != null" >
+        author_with_institution = #{authorWithInstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="authorKeyword != null" >
+        author_keyword = #{authorKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="indexKeyword != null" >
+        index_keyword = #{indexKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="analysisSerialNumber != null" >
+        analysis_serial_number = #{analysisSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cas != null" >
+        cas = #{cas,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null" >
+        manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingInfo != null" >
+        funding_info = #{fundingInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="reference != null" >
+        reference = #{reference,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null" >
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingAgent != null" >
+        funding_agent = #{fundingAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        publisher = #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="conferenceTitle != null" >
+        conference_title = #{conferenceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="conferenceDate != null" >
+        conference_date = #{conferenceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="conferenceLocation != null" >
+        conference_location = #{conferenceLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="conferenceCode != null" >
+        conference_code = #{conferenceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="issn != null" >
+        issn = #{issn,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null" >
+        isbn = #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="coden != null" >
+        coden = #{coden,jdbcType=VARCHAR},
+      </if>
+      <if test="pubmedId != null" >
+        pubmed_id = #{pubmedId,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="orginalPublicationAbbr != null" >
+        orginal_publication_abbr = #{orginalPublicationAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="paperType != null" >
+        paper_type = #{paperType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceOfPublication != null" >
+        source_of_publication = #{sourceOfPublication,jdbcType=VARCHAR},
+      </if>
+      <if test="eid != null" >
+        eid = #{eid,jdbcType=VARCHAR},
+      </if>
+      <if test="paperSubject != null" >
+        paper_subject = #{paperSubject,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.pojo.UansrRepo" >
+    update uansr_repo
+    set author = #{author,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      orginal_publication = #{orginalPublication,jdbcType=VARCHAR},
+      volume = #{volume,jdbcType=VARCHAR},
+      issue = #{issue,jdbcType=VARCHAR},
+      paper_id = #{paperId,jdbcType=INTEGER},
+      start_page = #{startPage,jdbcType=INTEGER},
+      end_page = #{endPage,jdbcType=INTEGER},
+      page_counter = #{pageCounter,jdbcType=INTEGER},
+      citing_paper = #{citingPaper,jdbcType=VARCHAR},
+      doi = #{doi,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      institution_owner = #{institutionOwner,jdbcType=VARCHAR},
+      author_with_institution = #{authorWithInstitution,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      author_keyword = #{authorKeyword,jdbcType=VARCHAR},
+      index_keyword = #{indexKeyword,jdbcType=VARCHAR},
+      analysis_serial_number = #{analysisSerialNumber,jdbcType=VARCHAR},
+      cas = #{cas,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      funding_info = #{fundingInfo,jdbcType=VARCHAR},
+      reference = #{reference,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      editor = #{editor,jdbcType=VARCHAR},
+      funding_agent = #{fundingAgent,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      conference_title = #{conferenceTitle,jdbcType=VARCHAR},
+      conference_date = #{conferenceDate,jdbcType=TIMESTAMP},
+      conference_location = #{conferenceLocation,jdbcType=VARCHAR},
+      conference_code = #{conferenceCode,jdbcType=VARCHAR},
+      issn = #{issn,jdbcType=VARCHAR},
+      isbn = #{isbn,jdbcType=VARCHAR},
+      coden = #{coden,jdbcType=VARCHAR},
+      pubmed_id = #{pubmedId,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      orginal_publication_abbr = #{orginalPublicationAbbr,jdbcType=VARCHAR},
+      paper_type = #{paperType,jdbcType=VARCHAR},
+      source_of_publication = #{sourceOfPublication,jdbcType=VARCHAR},
+      eid = #{eid,jdbcType=VARCHAR},
+      paper_subject = #{paperSubject,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAll" resultType="com.cc.pojo.UansrRepo">
+    SELECT * from uansr_repo
+  </select>
+</mapper>

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.dao.UebookRepoMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.pojo.UebookRepo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="isbn" property="isbn" jdbcType="VARCHAR" />
+    <result column="eisbn" property="eisbn" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="page_counter" property="pageCounter" jdbcType="VARCHAR" />
+    <result column="place_published" property="placePublished" jdbcType="VARCHAR" />
+    <result column="publisher" property="publisher" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="series_identification" property="seriesIdentification" jdbcType="VARCHAR" />
+    <result column="series_name" property="seriesName" jdbcType="VARCHAR" />
+    <result column="series_id" property="seriesId" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="keys_or_subjects" property="keysOrSubjects" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="class_num" property="classNum" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cc.pojo.UebookRepo" extends="BaseResultMap" >
+    <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, isbn, eisbn, author, title, page_counter, place_published, publisher, year, series_identification, 
+    series_name, series_id, url, img_url, keys_or_subjects, language, class_num, nation
+  </sql>
+  <sql id="Blob_Column_List" >
+    summary
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.cc.pojo.UebookRepoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from uebook_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.pojo.UebookRepoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from uebook_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from uebook_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from uebook_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.pojo.UebookRepoExample" >
+    delete from uebook_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.pojo.UebookRepo" >
+    insert into uebook_repo (id, isbn, eisbn, 
+      author, title, page_counter, 
+      place_published, publisher, year, 
+      series_identification, series_name, series_id, 
+      url, img_url, keys_or_subjects, 
+      language, class_num, nation, 
+      summary)
+    values (#{id,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, #{eisbn,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{pageCounter,jdbcType=VARCHAR}, 
+      #{placePublished,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, 
+      #{seriesIdentification,jdbcType=VARCHAR}, #{seriesName,jdbcType=VARCHAR}, #{seriesId,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{keysOrSubjects,jdbcType=VARCHAR}, 
+      #{language,jdbcType=VARCHAR}, #{classNum,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
+      #{summary,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.pojo.UebookRepo" >
+    insert into uebook_repo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="isbn != null" >
+        isbn,
+      </if>
+      <if test="eisbn != null" >
+        eisbn,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="pageCounter != null" >
+        page_counter,
+      </if>
+      <if test="placePublished != null" >
+        place_published,
+      </if>
+      <if test="publisher != null" >
+        publisher,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="seriesIdentification != null" >
+        series_identification,
+      </if>
+      <if test="seriesName != null" >
+        series_name,
+      </if>
+      <if test="seriesId != null" >
+        series_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="keysOrSubjects != null" >
+        keys_or_subjects,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="classNum != null" >
+        class_num,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null" >
+        #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="eisbn != null" >
+        #{eisbn,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pageCounter != null" >
+        #{pageCounter,jdbcType=VARCHAR},
+      </if>
+      <if test="placePublished != null" >
+        #{placePublished,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="seriesIdentification != null" >
+        #{seriesIdentification,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesName != null" >
+        #{seriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesId != null" >
+        #{seriesId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="keysOrSubjects != null" >
+        #{keysOrSubjects,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="classNum != null" >
+        #{classNum,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.pojo.UebookRepoExample" resultType="java.lang.Integer" >
+    select count(*) from uebook_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update uebook_repo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isbn != null" >
+        isbn = #{record.isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eisbn != null" >
+        eisbn = #{record.eisbn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageCounter != null" >
+        page_counter = #{record.pageCounter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.placePublished != null" >
+        place_published = #{record.placePublished,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publisher != null" >
+        publisher = #{record.publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.seriesIdentification != null" >
+        series_identification = #{record.seriesIdentification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seriesName != null" >
+        series_name = #{record.seriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seriesId != null" >
+        series_id = #{record.seriesId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgUrl != null" >
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keysOrSubjects != null" >
+        keys_or_subjects = #{record.keysOrSubjects,jdbcType=VARCHAR},
+      </if>
+      <if test="record.language != null" >
+        language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classNum != null" >
+        class_num = #{record.classNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nation != null" >
+        nation = #{record.nation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update uebook_repo
+    set id = #{record.id,jdbcType=VARCHAR},
+      isbn = #{record.isbn,jdbcType=VARCHAR},
+      eisbn = #{record.eisbn,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      page_counter = #{record.pageCounter,jdbcType=VARCHAR},
+      place_published = #{record.placePublished,jdbcType=VARCHAR},
+      publisher = #{record.publisher,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      series_identification = #{record.seriesIdentification,jdbcType=VARCHAR},
+      series_name = #{record.seriesName,jdbcType=VARCHAR},
+      series_id = #{record.seriesId,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      keys_or_subjects = #{record.keysOrSubjects,jdbcType=VARCHAR},
+      language = #{record.language,jdbcType=VARCHAR},
+      class_num = #{record.classNum,jdbcType=VARCHAR},
+      nation = #{record.nation,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update uebook_repo
+    set id = #{record.id,jdbcType=VARCHAR},
+      isbn = #{record.isbn,jdbcType=VARCHAR},
+      eisbn = #{record.eisbn,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      page_counter = #{record.pageCounter,jdbcType=VARCHAR},
+      place_published = #{record.placePublished,jdbcType=VARCHAR},
+      publisher = #{record.publisher,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      series_identification = #{record.seriesIdentification,jdbcType=VARCHAR},
+      series_name = #{record.seriesName,jdbcType=VARCHAR},
+      series_id = #{record.seriesId,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      keys_or_subjects = #{record.keysOrSubjects,jdbcType=VARCHAR},
+      language = #{record.language,jdbcType=VARCHAR},
+      class_num = #{record.classNum,jdbcType=VARCHAR},
+      nation = #{record.nation,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.pojo.UebookRepo" >
+    update uebook_repo
+    <set >
+      <if test="isbn != null" >
+        isbn = #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="eisbn != null" >
+        eisbn = #{eisbn,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pageCounter != null" >
+        page_counter = #{pageCounter,jdbcType=VARCHAR},
+      </if>
+      <if test="placePublished != null" >
+        place_published = #{placePublished,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        publisher = #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="seriesIdentification != null" >
+        series_identification = #{seriesIdentification,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesName != null" >
+        series_name = #{seriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesId != null" >
+        series_id = #{seriesId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="keysOrSubjects != null" >
+        keys_or_subjects = #{keysOrSubjects,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="classNum != null" >
+        class_num = #{classNum,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cc.pojo.UebookRepo" >
+    update uebook_repo
+    set isbn = #{isbn,jdbcType=VARCHAR},
+      eisbn = #{eisbn,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      page_counter = #{pageCounter,jdbcType=VARCHAR},
+      place_published = #{placePublished,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      series_identification = #{seriesIdentification,jdbcType=VARCHAR},
+      series_name = #{seriesName,jdbcType=VARCHAR},
+      series_id = #{seriesId,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      keys_or_subjects = #{keysOrSubjects,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      class_num = #{classNum,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.pojo.UebookRepo" >
+    update uebook_repo
+    set isbn = #{isbn,jdbcType=VARCHAR},
+      eisbn = #{eisbn,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      page_counter = #{pageCounter,jdbcType=VARCHAR},
+      place_published = #{placePublished,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      series_identification = #{seriesIdentification,jdbcType=VARCHAR},
+      series_name = #{seriesName,jdbcType=VARCHAR},
+      series_id = #{seriesId,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      keys_or_subjects = #{keysOrSubjects,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      class_num = #{classNum,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAll" resultType="com.cc.pojo.UebookRepo">
+    SELECT * from uebook_repo
+  </select>
+</mapper>

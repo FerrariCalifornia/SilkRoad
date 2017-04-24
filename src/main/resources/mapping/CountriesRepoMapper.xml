@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.dao.CountriesRepoMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.pojo.CountriesRepo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="storeld" property="storeld" jdbcType="VARCHAR" />
+    <result column="article_type" property="articleType" jdbcType="VARCHAR" />
+    <result column="copyright" property="copyright" jdbcType="VARCHAR" />
+    <result column="digital_object_identifier" property="digitalObjectIdentifier" jdbcType="VARCHAR" />
+    <result column="doc_type" property="docType" jdbcType="VARCHAR" />
+    <result column="entry_date" property="entryDate" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="summary_language" property="summaryLanguage" jdbcType="VARCHAR" />
+    <result column="pages" property="pages" jdbcType="VARCHAR" />
+    <result column="publish_place" property="publishPlace" jdbcType="VARCHAR" />
+    <result column="pub_date" property="pubDate" jdbcType="VARCHAR" />
+    <result column="pub_title" property="pubTitle" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="doc_url" property="docUrl" jdbcType="VARCHAR" />
+    <result column="start_page" property="startPage" jdbcType="VARCHAR" />
+    <result column="subject_terms" property="subjectTerms" jdbcType="VARCHAR" />
+    <result column="subjects" property="subjects" jdbcType="VARCHAR" />
+    <result column="find_copy" property="findCopy" jdbcType="VARCHAR" />
+    <result column="res_database" property="resDatabase" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cc.pojo.CountriesRepo" extends="BaseResultMap" >
+    <result column="abstract_a" property="abstractA" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, storeld, article_type, copyright, digital_object_identifier, doc_type, 
+    entry_date, language, summary_language, pages, publish_place, pub_date, pub_title, 
+    year, doc_url, start_page, subject_terms, subjects, find_copy, res_database
+  </sql>
+  <sql id="Blob_Column_List" >
+    abstract_a
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.cc.pojo.CountriesRepoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from countries_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.pojo.CountriesRepoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from countries_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from countries_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from countries_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.pojo.CountriesRepoExample" >
+    delete from countries_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.pojo.CountriesRepo" >
+    insert into countries_repo (id, title, storeld, 
+      article_type, copyright, digital_object_identifier, 
+      doc_type, entry_date, language, 
+      summary_language, pages, publish_place, 
+      pub_date, pub_title, year, 
+      doc_url, start_page, subject_terms, 
+      subjects, find_copy, res_database, 
+      abstract_a)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{storeld,jdbcType=VARCHAR}, 
+      #{articleType,jdbcType=VARCHAR}, #{copyright,jdbcType=VARCHAR}, #{digitalObjectIdentifier,jdbcType=VARCHAR}, 
+      #{docType,jdbcType=VARCHAR}, #{entryDate,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{summaryLanguage,jdbcType=VARCHAR}, #{pages,jdbcType=VARCHAR}, #{publishPlace,jdbcType=VARCHAR}, 
+      #{pubDate,jdbcType=VARCHAR}, #{pubTitle,jdbcType=VARCHAR}, #{year,jdbcType=INTEGER}, 
+      #{docUrl,jdbcType=VARCHAR}, #{startPage,jdbcType=VARCHAR}, #{subjectTerms,jdbcType=VARCHAR}, 
+      #{subjects,jdbcType=VARCHAR}, #{findCopy,jdbcType=VARCHAR}, #{resDatabase,jdbcType=VARCHAR}, 
+      #{abstractA,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.pojo.CountriesRepo" >
+    insert into countries_repo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="storeld != null" >
+        storeld,
+      </if>
+      <if test="articleType != null" >
+        article_type,
+      </if>
+      <if test="copyright != null" >
+        copyright,
+      </if>
+      <if test="digitalObjectIdentifier != null" >
+        digital_object_identifier,
+      </if>
+      <if test="docType != null" >
+        doc_type,
+      </if>
+      <if test="entryDate != null" >
+        entry_date,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="summaryLanguage != null" >
+        summary_language,
+      </if>
+      <if test="pages != null" >
+        pages,
+      </if>
+      <if test="publishPlace != null" >
+        publish_place,
+      </if>
+      <if test="pubDate != null" >
+        pub_date,
+      </if>
+      <if test="pubTitle != null" >
+        pub_title,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="docUrl != null" >
+        doc_url,
+      </if>
+      <if test="startPage != null" >
+        start_page,
+      </if>
+      <if test="subjectTerms != null" >
+        subject_terms,
+      </if>
+      <if test="subjects != null" >
+        subjects,
+      </if>
+      <if test="findCopy != null" >
+        find_copy,
+      </if>
+      <if test="resDatabase != null" >
+        res_database,
+      </if>
+      <if test="abstractA != null" >
+        abstract_a,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="storeld != null" >
+        #{storeld,jdbcType=VARCHAR},
+      </if>
+      <if test="articleType != null" >
+        #{articleType,jdbcType=VARCHAR},
+      </if>
+      <if test="copyright != null" >
+        #{copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="digitalObjectIdentifier != null" >
+        #{digitalObjectIdentifier,jdbcType=VARCHAR},
+      </if>
+      <if test="docType != null" >
+        #{docType,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null" >
+        #{entryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="summaryLanguage != null" >
+        #{summaryLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="pages != null" >
+        #{pages,jdbcType=VARCHAR},
+      </if>
+      <if test="publishPlace != null" >
+        #{publishPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="pubDate != null" >
+        #{pubDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pubTitle != null" >
+        #{pubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="docUrl != null" >
+        #{docUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="startPage != null" >
+        #{startPage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectTerms != null" >
+        #{subjectTerms,jdbcType=VARCHAR},
+      </if>
+      <if test="subjects != null" >
+        #{subjects,jdbcType=VARCHAR},
+      </if>
+      <if test="findCopy != null" >
+        #{findCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="resDatabase != null" >
+        #{resDatabase,jdbcType=VARCHAR},
+      </if>
+      <if test="abstractA != null" >
+        #{abstractA,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.pojo.CountriesRepoExample" resultType="java.lang.Integer" >
+    select count(*) from countries_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update countries_repo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeld != null" >
+        storeld = #{record.storeld,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleType != null" >
+        article_type = #{record.articleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.copyright != null" >
+        copyright = #{record.copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="record.digitalObjectIdentifier != null" >
+        digital_object_identifier = #{record.digitalObjectIdentifier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docType != null" >
+        doc_type = #{record.docType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entryDate != null" >
+        entry_date = #{record.entryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.language != null" >
+        language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summaryLanguage != null" >
+        summary_language = #{record.summaryLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pages != null" >
+        pages = #{record.pages,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishPlace != null" >
+        publish_place = #{record.publishPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pubDate != null" >
+        pub_date = #{record.pubDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pubTitle != null" >
+        pub_title = #{record.pubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.docUrl != null" >
+        doc_url = #{record.docUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startPage != null" >
+        start_page = #{record.startPage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectTerms != null" >
+        subject_terms = #{record.subjectTerms,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjects != null" >
+        subjects = #{record.subjects,jdbcType=VARCHAR},
+      </if>
+      <if test="record.findCopy != null" >
+        find_copy = #{record.findCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resDatabase != null" >
+        res_database = #{record.resDatabase,jdbcType=VARCHAR},
+      </if>
+      <if test="record.abstractA != null" >
+        abstract_a = #{record.abstractA,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update countries_repo
+    set id = #{record.id,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      storeld = #{record.storeld,jdbcType=VARCHAR},
+      article_type = #{record.articleType,jdbcType=VARCHAR},
+      copyright = #{record.copyright,jdbcType=VARCHAR},
+      digital_object_identifier = #{record.digitalObjectIdentifier,jdbcType=VARCHAR},
+      doc_type = #{record.docType,jdbcType=VARCHAR},
+      entry_date = #{record.entryDate,jdbcType=VARCHAR},
+      language = #{record.language,jdbcType=VARCHAR},
+      summary_language = #{record.summaryLanguage,jdbcType=VARCHAR},
+      pages = #{record.pages,jdbcType=VARCHAR},
+      publish_place = #{record.publishPlace,jdbcType=VARCHAR},
+      pub_date = #{record.pubDate,jdbcType=VARCHAR},
+      pub_title = #{record.pubTitle,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      doc_url = #{record.docUrl,jdbcType=VARCHAR},
+      start_page = #{record.startPage,jdbcType=VARCHAR},
+      subject_terms = #{record.subjectTerms,jdbcType=VARCHAR},
+      subjects = #{record.subjects,jdbcType=VARCHAR},
+      find_copy = #{record.findCopy,jdbcType=VARCHAR},
+      res_database = #{record.resDatabase,jdbcType=VARCHAR},
+      abstract_a = #{record.abstractA,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update countries_repo
+    set id = #{record.id,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      storeld = #{record.storeld,jdbcType=VARCHAR},
+      article_type = #{record.articleType,jdbcType=VARCHAR},
+      copyright = #{record.copyright,jdbcType=VARCHAR},
+      digital_object_identifier = #{record.digitalObjectIdentifier,jdbcType=VARCHAR},
+      doc_type = #{record.docType,jdbcType=VARCHAR},
+      entry_date = #{record.entryDate,jdbcType=VARCHAR},
+      language = #{record.language,jdbcType=VARCHAR},
+      summary_language = #{record.summaryLanguage,jdbcType=VARCHAR},
+      pages = #{record.pages,jdbcType=VARCHAR},
+      publish_place = #{record.publishPlace,jdbcType=VARCHAR},
+      pub_date = #{record.pubDate,jdbcType=VARCHAR},
+      pub_title = #{record.pubTitle,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=INTEGER},
+      doc_url = #{record.docUrl,jdbcType=VARCHAR},
+      start_page = #{record.startPage,jdbcType=VARCHAR},
+      subject_terms = #{record.subjectTerms,jdbcType=VARCHAR},
+      subjects = #{record.subjects,jdbcType=VARCHAR},
+      find_copy = #{record.findCopy,jdbcType=VARCHAR},
+      res_database = #{record.resDatabase,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.pojo.CountriesRepo" >
+    update countries_repo
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="storeld != null" >
+        storeld = #{storeld,jdbcType=VARCHAR},
+      </if>
+      <if test="articleType != null" >
+        article_type = #{articleType,jdbcType=VARCHAR},
+      </if>
+      <if test="copyright != null" >
+        copyright = #{copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="digitalObjectIdentifier != null" >
+        digital_object_identifier = #{digitalObjectIdentifier,jdbcType=VARCHAR},
+      </if>
+      <if test="docType != null" >
+        doc_type = #{docType,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null" >
+        entry_date = #{entryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="summaryLanguage != null" >
+        summary_language = #{summaryLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="pages != null" >
+        pages = #{pages,jdbcType=VARCHAR},
+      </if>
+      <if test="publishPlace != null" >
+        publish_place = #{publishPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="pubDate != null" >
+        pub_date = #{pubDate,jdbcType=VARCHAR},
+      </if>
+      <if test="pubTitle != null" >
+        pub_title = #{pubTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="docUrl != null" >
+        doc_url = #{docUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="startPage != null" >
+        start_page = #{startPage,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectTerms != null" >
+        subject_terms = #{subjectTerms,jdbcType=VARCHAR},
+      </if>
+      <if test="subjects != null" >
+        subjects = #{subjects,jdbcType=VARCHAR},
+      </if>
+      <if test="findCopy != null" >
+        find_copy = #{findCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="resDatabase != null" >
+        res_database = #{resDatabase,jdbcType=VARCHAR},
+      </if>
+      <if test="abstractA != null" >
+        abstract_a = #{abstractA,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cc.pojo.CountriesRepo" >
+    update countries_repo
+    set title = #{title,jdbcType=VARCHAR},
+      storeld = #{storeld,jdbcType=VARCHAR},
+      article_type = #{articleType,jdbcType=VARCHAR},
+      copyright = #{copyright,jdbcType=VARCHAR},
+      digital_object_identifier = #{digitalObjectIdentifier,jdbcType=VARCHAR},
+      doc_type = #{docType,jdbcType=VARCHAR},
+      entry_date = #{entryDate,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      summary_language = #{summaryLanguage,jdbcType=VARCHAR},
+      pages = #{pages,jdbcType=VARCHAR},
+      publish_place = #{publishPlace,jdbcType=VARCHAR},
+      pub_date = #{pubDate,jdbcType=VARCHAR},
+      pub_title = #{pubTitle,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      doc_url = #{docUrl,jdbcType=VARCHAR},
+      start_page = #{startPage,jdbcType=VARCHAR},
+      subject_terms = #{subjectTerms,jdbcType=VARCHAR},
+      subjects = #{subjects,jdbcType=VARCHAR},
+      find_copy = #{findCopy,jdbcType=VARCHAR},
+      res_database = #{resDatabase,jdbcType=VARCHAR},
+      abstract_a = #{abstractA,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.pojo.CountriesRepo" >
+    update countries_repo
+    set title = #{title,jdbcType=VARCHAR},
+      storeld = #{storeld,jdbcType=VARCHAR},
+      article_type = #{articleType,jdbcType=VARCHAR},
+      copyright = #{copyright,jdbcType=VARCHAR},
+      digital_object_identifier = #{digitalObjectIdentifier,jdbcType=VARCHAR},
+      doc_type = #{docType,jdbcType=VARCHAR},
+      entry_date = #{entryDate,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      summary_language = #{summaryLanguage,jdbcType=VARCHAR},
+      pages = #{pages,jdbcType=VARCHAR},
+      publish_place = #{publishPlace,jdbcType=VARCHAR},
+      pub_date = #{pubDate,jdbcType=VARCHAR},
+      pub_title = #{pubTitle,jdbcType=VARCHAR},
+      year = #{year,jdbcType=INTEGER},
+      doc_url = #{docUrl,jdbcType=VARCHAR},
+      start_page = #{startPage,jdbcType=VARCHAR},
+      subject_terms = #{subjectTerms,jdbcType=VARCHAR},
+      subjects = #{subjects,jdbcType=VARCHAR},
+      find_copy = #{findCopy,jdbcType=VARCHAR},
+      res_database = #{resDatabase,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAll" resultType="com.cc.pojo.CountriesRepo">
+    SELECT * from countries_repo
+  </select>
+</mapper>
