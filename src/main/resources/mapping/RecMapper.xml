@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cc.dao.BookMapper" >
-  <resultMap id="BaseResultMap" type="com.cc.pojo.Book" >
+<mapper namespace="com.cc.dao.RecMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.pojo.Rec" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="bookName" property="bookname" jdbcType="CHAR" />
-    <result column="publisher" property="publisher" jdbcType="CHAR" />
-    <result column="author" property="author" jdbcType="CHAR" />
-    <result column="Summary" property="summary" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="res_type_id" property="resTypeId" jdbcType="INTEGER" />
+    <result column="recommend_ids" property="recommendIds" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, bookName, publisher, author, Summary
+    id, user_id, res_type_id, recommend_ids
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.pojo.BookExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.pojo.RecExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from book
+    from rec
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,85 +85,76 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from book
+    from rec
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from book
+    delete from rec
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.cc.pojo.BookExample" >
-    delete from book
+  <delete id="deleteByExample" parameterType="com.cc.pojo.RecExample" >
+    delete from rec
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.cc.pojo.Book" >
-    insert into book (id, bookName, publisher, 
-      author, Summary)
-    values (#{id,jdbcType=INTEGER}, #{bookname,jdbcType=CHAR}, #{publisher,jdbcType=CHAR}, 
-      #{author,jdbcType=CHAR}, #{summary,jdbcType=CHAR})
+  <insert id="insert" parameterType="com.cc.pojo.Rec" >
+    insert into rec (id, user_id, res_type_id, 
+      recommend_ids)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{resTypeId,jdbcType=INTEGER}, 
+      #{recommendIds,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.cc.pojo.Book" >
-    insert into book
+  <insert id="insertSelective" parameterType="com.cc.pojo.Rec" >
+    insert into rec
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="bookname != null" >
-        bookName,
+      <if test="userId != null" >
+        user_id,
       </if>
-      <if test="publisher != null" >
-        publisher,
+      <if test="resTypeId != null" >
+        res_type_id,
       </if>
-      <if test="author != null" >
-        author,
-      </if>
-      <if test="summary != null" >
-        Summary,
+      <if test="recommendIds != null" >
+        recommend_ids,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="bookname != null" >
-        #{bookname,jdbcType=CHAR},
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="publisher != null" >
-        #{publisher,jdbcType=CHAR},
+      <if test="resTypeId != null" >
+        #{resTypeId,jdbcType=INTEGER},
       </if>
-      <if test="author != null" >
-        #{author,jdbcType=CHAR},
-      </if>
-      <if test="summary != null" >
-        #{summary,jdbcType=CHAR},
+      <if test="recommendIds != null" >
+        #{recommendIds,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.cc.pojo.BookExample" resultType="java.lang.Integer" >
-    select count(*) from book
+  <select id="countByExample" parameterType="com.cc.pojo.RecExample" resultType="java.lang.Integer" >
+    select count(*) from rec
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update book
+    update rec
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.bookname != null" >
-        bookName = #{record.bookname,jdbcType=CHAR},
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
-      <if test="record.publisher != null" >
-        publisher = #{record.publisher,jdbcType=CHAR},
+      <if test="record.resTypeId != null" >
+        res_type_id = #{record.resTypeId,jdbcType=INTEGER},
       </if>
-      <if test="record.author != null" >
-        author = #{record.author,jdbcType=CHAR},
-      </if>
-      <if test="record.summary != null" >
-        Summary = #{record.summary,jdbcType=CHAR},
+      <if test="record.recommendIds != null" >
+        recommend_ids = #{record.recommendIds,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -172,40 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update book
+    update rec
     set id = #{record.id,jdbcType=INTEGER},
-      bookName = #{record.bookname,jdbcType=CHAR},
-      publisher = #{record.publisher,jdbcType=CHAR},
-      author = #{record.author,jdbcType=CHAR},
-      Summary = #{record.summary,jdbcType=CHAR}
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      res_type_id = #{record.resTypeId,jdbcType=INTEGER},
+      recommend_ids = #{record.recommendIds,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cc.pojo.Book" >
-    update book
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.pojo.Rec" >
+    update rec
     <set >
-      <if test="bookname != null" >
-        bookName = #{bookname,jdbcType=CHAR},
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="publisher != null" >
-        publisher = #{publisher,jdbcType=CHAR},
+      <if test="resTypeId != null" >
+        res_type_id = #{resTypeId,jdbcType=INTEGER},
       </if>
-      <if test="author != null" >
-        author = #{author,jdbcType=CHAR},
-      </if>
-      <if test="summary != null" >
-        Summary = #{summary,jdbcType=CHAR},
+      <if test="recommendIds != null" >
+        recommend_ids = #{recommendIds,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cc.pojo.Book" >
-    update book
-    set bookName = #{bookname,jdbcType=CHAR},
-      publisher = #{publisher,jdbcType=CHAR},
-      author = #{author,jdbcType=CHAR},
-      Summary = #{summary,jdbcType=CHAR}
+  <update id="updateByPrimaryKey" parameterType="com.cc.pojo.Rec" >
+    update rec
+    set user_id = #{userId,jdbcType=VARCHAR},
+      res_type_id = #{resTypeId,jdbcType=INTEGER},
+      recommend_ids = #{recommendIds,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -26,7 +26,7 @@ public class CurlRec {
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
 
         String[] ids = {"001476774459201f16defc7695c409e8208cef3cfac2913000","001476774459413204c8498f4504c17961241a9b0c27462000"};
-        rec(client,"countries",ids);
+        rec(client,"uansr",ids);
         client.close();
     }
 
@@ -35,8 +35,12 @@ public class CurlRec {
         System.out.println("start rec");
         String index = res_type;
         String type = res_type+"Repo";
-        int idLength= 2;
+        int idLength= ids.length;
         String[] fields = new String[2];
+        for (String s :ids
+             ) {
+            System.out.println("res_id="+s);
+        }
 
         if (res_type.equals("uansr")|| res_type.equals("uebook")){
             fields[0]="summary";
@@ -68,11 +72,11 @@ public class CurlRec {
         System.err.println(response);
         SearchHit[] s =response.getHits().getHits();
 
-        for (SearchHit sh:s
-                ) {
-            String json= gson.toJson(sh.getSource());
-            System.out.println(json);
-        }
+//        for (SearchHit sh:s
+//                ) {
+//            String json= gson.toJson(sh.getSource());
+//            System.out.println(json);
+//        }
         return gson.toJson(s);
     }
 

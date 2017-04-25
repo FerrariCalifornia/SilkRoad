@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.dao.LogMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.pojo.Log" >
+    <id column="_id" property="id" jdbcType="VARCHAR" />
+    <result column="click_time" property="clickTime" jdbcType="TIMESTAMP" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="res_id" property="resId" jdbcType="VARCHAR" />
+    <result column="res_type" property="resType" jdbcType="VARCHAR" />
+    <result column="res_type_id" property="resTypeId" jdbcType="INTEGER" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    _id, click_time, keywords, res_id, res_type, res_type_id, role, url, user_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.pojo.LogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from log
+    where _id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from log
+    where _id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.pojo.LogExample" >
+    delete from log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.pojo.Log" >
+    insert into log (_id, click_time, keywords, 
+      res_id, res_type, res_type_id, 
+      role, url, user_id)
+    values (#{id,jdbcType=VARCHAR}, #{clickTime,jdbcType=TIMESTAMP}, #{keywords,jdbcType=VARCHAR}, 
+      #{resId,jdbcType=VARCHAR}, #{resType,jdbcType=VARCHAR}, #{resTypeId,jdbcType=INTEGER}, 
+      #{role,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.pojo.Log" >
+    insert into log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        _id,
+      </if>
+      <if test="clickTime != null" >
+        click_time,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="resId != null" >
+        res_id,
+      </if>
+      <if test="resType != null" >
+        res_type,
+      </if>
+      <if test="resTypeId != null" >
+        res_type_id,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="clickTime != null" >
+        #{clickTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="resId != null" >
+        #{resId,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="resTypeId != null" >
+        #{resTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.pojo.LogExample" resultType="java.lang.Integer" >
+    select count(*) from log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update log
+    <set >
+      <if test="record.id != null" >
+        _id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clickTime != null" >
+        click_time = #{record.clickTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.keywords != null" >
+        keywords = #{record.keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resId != null" >
+        res_id = #{record.resId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resType != null" >
+        res_type = #{record.resType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resTypeId != null" >
+        res_type_id = #{record.resTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.role != null" >
+        role = #{record.role,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update log
+    set _id = #{record.id,jdbcType=VARCHAR},
+      click_time = #{record.clickTime,jdbcType=TIMESTAMP},
+      keywords = #{record.keywords,jdbcType=VARCHAR},
+      res_id = #{record.resId,jdbcType=VARCHAR},
+      res_type = #{record.resType,jdbcType=VARCHAR},
+      res_type_id = #{record.resTypeId,jdbcType=INTEGER},
+      role = #{record.role,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.pojo.Log" >
+    update log
+    <set >
+      <if test="clickTime != null" >
+        click_time = #{clickTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="resId != null" >
+        res_id = #{resId,jdbcType=VARCHAR},
+      </if>
+      <if test="resType != null" >
+        res_type = #{resType,jdbcType=VARCHAR},
+      </if>
+      <if test="resTypeId != null" >
+        res_type_id = #{resTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where _id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.pojo.Log" >
+    update log
+    set click_time = #{clickTime,jdbcType=TIMESTAMP},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      res_id = #{resId,jdbcType=VARCHAR},
+      res_type = #{resType,jdbcType=VARCHAR},
+      res_type_id = #{resTypeId,jdbcType=INTEGER},
+      role = #{role,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where _id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectUserHistory" resultType="com.cc.pojo.Log" parameterType="com.cc.pojo.Log">
+    SELECT * FROM log WHERE user_id =#{userId} AND res_type_id = #{resTypeId}  ORDER BY click_time DESC LIMIT 10;
+  </select>
+</mapper>
