@@ -5,6 +5,8 @@ import com.cc.dao.LogMapper;
 import com.cc.dao.RecMapper;
 import com.cc.morelike.CurlRec;
 import com.cc.pojo.Log;
+import com.cc.pojo.Rec;
+import com.google.gson.Gson;
 import org.apache.hadoop.yarn.webapp.hamlet.Hamlet;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -28,8 +30,6 @@ public class Recommend {
         TransportClient client = new PreBuiltTransportClient(Settings.EMPTY)
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
 
-
-
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-mybatis.xml");
         LogMapper logMapper = (LogMapper) context.getBean("logMapper");
         RecMapper recMapper = (RecMapper) context.getBean("recMapper");
@@ -41,11 +41,9 @@ public class Recommend {
         map.put(4,"regulation");
         map.put(5,"uansr");
         map.put(6,"uebook");
-        for (int i = 101; i <102 ; i++) {
+        Gson gson = new Gson();
+        for (int i = 100; i <1000 ; i++) {
             for (int j = 1; j < 7; j++) {
-                if (j==3){
-                    continue;
-                }
                 Log log = new Log();
                 log.setUserId(String.valueOf(i));
                 log.setResTypeId(j);
@@ -53,11 +51,14 @@ public class Recommend {
                 String[] ids = new String[list.size()];
                 for (int k = 0; k < list.size() ; k++) {
                     ids[k]=list.get(k).getResId();
-                    System.out.println("------------");
-                    System.out.println(list.get(k).toString());
                 }
-                String s = curlRec.rec(client,map.get(j),ids);
-                System.out.println(s);
+                String[] s = curlRec.rec(client,map.get(j),ids);
+                Rec rec = new Rec();
+                rec.setResTypeId(j);
+                rec.setUserId(String.valueOf(i));
+                rec.setRecommendIds(gson.toJson(s));
+                recMapper.insert(rec);
+//                System.out.println(gson.toJson(s));
             }
         }
         client.close();

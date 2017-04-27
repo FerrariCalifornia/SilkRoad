@@ -31,18 +31,13 @@ public class CurlRec {
     }
 
 
-    public static String rec(TransportClient client,String res_type,String[] ids) throws Exception{
-        System.out.println("start rec");
+    public static String[] rec(TransportClient client,String res_type,String[] ids) throws Exception{
+//        System.out.println("start rec");
         String index = res_type;
         String type = res_type+"Repo";
         int idLength= ids.length;
         String[] fields = new String[2];
-        for (String s :ids
-             ) {
-            System.out.println("res_id="+s);
-        }
-
-        if (res_type.equals("uansr")|| res_type.equals("uebook")){
+        if (res_type.equals("uansr")|| res_type.equals("uebook")|| res_type.equals("pebook")){
             fields[0]="summary";
             fields[1]="title";
         }else if(res_type.equals("companies")){
@@ -68,16 +63,14 @@ public class CurlRec {
                 .setQuery(qb)
                 .setSize(10)
                 .get();
-        Gson gson = new Gson();
-        System.err.println(response);
-        SearchHit[] s =response.getHits().getHits();
 
-//        for (SearchHit sh:s
-//                ) {
-//            String json= gson.toJson(sh.getSource());
-//            System.out.println(json);
-//        }
-        return gson.toJson(s);
+
+        SearchHit[] s =response.getHits().getHits();
+        String[] recomend_result = new String[s.length];
+        for (int i = 0; i <s.length ; i++) {
+            recomend_result[i]=s[i].getSource().get("id").toString();
+        }
+        return recomend_result;
     }
 
 }

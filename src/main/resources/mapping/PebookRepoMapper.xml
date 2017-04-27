@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.dao.PebookRepoMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.pojo.PebookRepo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="issn_online" property="issnOnline" jdbcType="VARCHAR" />
+    <result column="isbn_online" property="isbnOnline" jdbcType="VARCHAR" />
+    <result column="doi" property="doi" jdbcType="VARCHAR" />
+    <result column="date_publication" property="datePublication" jdbcType="DATE" />
+    <result column="pages" property="pages" jdbcType="INTEGER" />
+    <result column="book_title" property="bookTitle" jdbcType="VARCHAR" />
+    <result column="issn_print" property="issnPrint" jdbcType="VARCHAR" />
+    <result column="isbn_print" property="isbnPrint" jdbcType="VARCHAR" />
+    <result column="meta_url" property="metaUrl" jdbcType="VARCHAR" />
+    <result column="text_url" property="textUrl" jdbcType="VARCHAR" />
+    <result column="book_type" property="bookType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cc.pojo.PebookRepo" extends="BaseResultMap" >
+    <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, language, issn_online, isbn_online, doi, date_publication, pages, book_title, 
+    issn_print, isbn_print, meta_url, text_url, book_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    summary
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.cc.pojo.PebookRepoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pebook_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.pojo.PebookRepoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pebook_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pebook_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pebook_repo
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.pojo.PebookRepoExample" >
+    delete from pebook_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.pojo.PebookRepo" >
+    insert into pebook_repo (id, title, language, 
+      issn_online, isbn_online, doi, 
+      date_publication, pages, book_title, 
+      issn_print, isbn_print, meta_url, 
+      text_url, book_type, summary
+      )
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{issnOnline,jdbcType=VARCHAR}, #{isbnOnline,jdbcType=VARCHAR}, #{doi,jdbcType=VARCHAR}, 
+      #{datePublication,jdbcType=DATE}, #{pages,jdbcType=INTEGER}, #{bookTitle,jdbcType=VARCHAR}, 
+      #{issnPrint,jdbcType=VARCHAR}, #{isbnPrint,jdbcType=VARCHAR}, #{metaUrl,jdbcType=VARCHAR}, 
+      #{textUrl,jdbcType=VARCHAR}, #{bookType,jdbcType=VARCHAR}, #{summary,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.pojo.PebookRepo" >
+    insert into pebook_repo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="issnOnline != null" >
+        issn_online,
+      </if>
+      <if test="isbnOnline != null" >
+        isbn_online,
+      </if>
+      <if test="doi != null" >
+        doi,
+      </if>
+      <if test="datePublication != null" >
+        date_publication,
+      </if>
+      <if test="pages != null" >
+        pages,
+      </if>
+      <if test="bookTitle != null" >
+        book_title,
+      </if>
+      <if test="issnPrint != null" >
+        issn_print,
+      </if>
+      <if test="isbnPrint != null" >
+        isbn_print,
+      </if>
+      <if test="metaUrl != null" >
+        meta_url,
+      </if>
+      <if test="textUrl != null" >
+        text_url,
+      </if>
+      <if test="bookType != null" >
+        book_type,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="issnOnline != null" >
+        #{issnOnline,jdbcType=VARCHAR},
+      </if>
+      <if test="isbnOnline != null" >
+        #{isbnOnline,jdbcType=VARCHAR},
+      </if>
+      <if test="doi != null" >
+        #{doi,jdbcType=VARCHAR},
+      </if>
+      <if test="datePublication != null" >
+        #{datePublication,jdbcType=DATE},
+      </if>
+      <if test="pages != null" >
+        #{pages,jdbcType=INTEGER},
+      </if>
+      <if test="bookTitle != null" >
+        #{bookTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="issnPrint != null" >
+        #{issnPrint,jdbcType=VARCHAR},
+      </if>
+      <if test="isbnPrint != null" >
+        #{isbnPrint,jdbcType=VARCHAR},
+      </if>
+      <if test="metaUrl != null" >
+        #{metaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="textUrl != null" >
+        #{textUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bookType != null" >
+        #{bookType,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.pojo.PebookRepoExample" resultType="java.lang.Integer" >
+    select count(*) from pebook_repo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pebook_repo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.language != null" >
+        language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issnOnline != null" >
+        issn_online = #{record.issnOnline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isbnOnline != null" >
+        isbn_online = #{record.isbnOnline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doi != null" >
+        doi = #{record.doi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datePublication != null" >
+        date_publication = #{record.datePublication,jdbcType=DATE},
+      </if>
+      <if test="record.pages != null" >
+        pages = #{record.pages,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookTitle != null" >
+        book_title = #{record.bookTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issnPrint != null" >
+        issn_print = #{record.issnPrint,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isbnPrint != null" >
+        isbn_print = #{record.isbnPrint,jdbcType=VARCHAR},
+      </if>
+      <if test="record.metaUrl != null" >
+        meta_url = #{record.metaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.textUrl != null" >
+        text_url = #{record.textUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookType != null" >
+        book_type = #{record.bookType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update pebook_repo
+    set id = #{record.id,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      language = #{record.language,jdbcType=VARCHAR},
+      issn_online = #{record.issnOnline,jdbcType=VARCHAR},
+      isbn_online = #{record.isbnOnline,jdbcType=VARCHAR},
+      doi = #{record.doi,jdbcType=VARCHAR},
+      date_publication = #{record.datePublication,jdbcType=DATE},
+      pages = #{record.pages,jdbcType=INTEGER},
+      book_title = #{record.bookTitle,jdbcType=VARCHAR},
+      issn_print = #{record.issnPrint,jdbcType=VARCHAR},
+      isbn_print = #{record.isbnPrint,jdbcType=VARCHAR},
+      meta_url = #{record.metaUrl,jdbcType=VARCHAR},
+      text_url = #{record.textUrl,jdbcType=VARCHAR},
+      book_type = #{record.bookType,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pebook_repo
+    set id = #{record.id,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      language = #{record.language,jdbcType=VARCHAR},
+      issn_online = #{record.issnOnline,jdbcType=VARCHAR},
+      isbn_online = #{record.isbnOnline,jdbcType=VARCHAR},
+      doi = #{record.doi,jdbcType=VARCHAR},
+      date_publication = #{record.datePublication,jdbcType=DATE},
+      pages = #{record.pages,jdbcType=INTEGER},
+      book_title = #{record.bookTitle,jdbcType=VARCHAR},
+      issn_print = #{record.issnPrint,jdbcType=VARCHAR},
+      isbn_print = #{record.isbnPrint,jdbcType=VARCHAR},
+      meta_url = #{record.metaUrl,jdbcType=VARCHAR},
+      text_url = #{record.textUrl,jdbcType=VARCHAR},
+      book_type = #{record.bookType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.pojo.PebookRepo" >
+    update pebook_repo
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="issnOnline != null" >
+        issn_online = #{issnOnline,jdbcType=VARCHAR},
+      </if>
+      <if test="isbnOnline != null" >
+        isbn_online = #{isbnOnline,jdbcType=VARCHAR},
+      </if>
+      <if test="doi != null" >
+        doi = #{doi,jdbcType=VARCHAR},
+      </if>
+      <if test="datePublication != null" >
+        date_publication = #{datePublication,jdbcType=DATE},
+      </if>
+      <if test="pages != null" >
+        pages = #{pages,jdbcType=INTEGER},
+      </if>
+      <if test="bookTitle != null" >
+        book_title = #{bookTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="issnPrint != null" >
+        issn_print = #{issnPrint,jdbcType=VARCHAR},
+      </if>
+      <if test="isbnPrint != null" >
+        isbn_print = #{isbnPrint,jdbcType=VARCHAR},
+      </if>
+      <if test="metaUrl != null" >
+        meta_url = #{metaUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="textUrl != null" >
+        text_url = #{textUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bookType != null" >
+        book_type = #{bookType,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cc.pojo.PebookRepo" >
+    update pebook_repo
+    set title = #{title,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      issn_online = #{issnOnline,jdbcType=VARCHAR},
+      isbn_online = #{isbnOnline,jdbcType=VARCHAR},
+      doi = #{doi,jdbcType=VARCHAR},
+      date_publication = #{datePublication,jdbcType=DATE},
+      pages = #{pages,jdbcType=INTEGER},
+      book_title = #{bookTitle,jdbcType=VARCHAR},
+      issn_print = #{issnPrint,jdbcType=VARCHAR},
+      isbn_print = #{isbnPrint,jdbcType=VARCHAR},
+      meta_url = #{metaUrl,jdbcType=VARCHAR},
+      text_url = #{textUrl,jdbcType=VARCHAR},
+      book_type = #{bookType,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.pojo.PebookRepo" >
+    update pebook_repo
+    set title = #{title,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      issn_online = #{issnOnline,jdbcType=VARCHAR},
+      isbn_online = #{isbnOnline,jdbcType=VARCHAR},
+      doi = #{doi,jdbcType=VARCHAR},
+      date_publication = #{datePublication,jdbcType=DATE},
+      pages = #{pages,jdbcType=INTEGER},
+      book_title = #{bookTitle,jdbcType=VARCHAR},
+      issn_print = #{issnPrint,jdbcType=VARCHAR},
+      isbn_print = #{isbnPrint,jdbcType=VARCHAR},
+      meta_url = #{metaUrl,jdbcType=VARCHAR},
+      text_url = #{textUrl,jdbcType=VARCHAR},
+      book_type = #{bookType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" resultType="com.cc.pojo.PebookRepo">
+    SELECT * from pebook_repo
+  </select>
+</mapper>

@@ -271,6 +271,6 @@
     where _id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectUserHistory" resultType="com.cc.pojo.Log" parameterType="com.cc.pojo.Log">
-    SELECT * FROM log WHERE user_id =#{userId} AND res_type_id = #{resTypeId}  ORDER BY click_time DESC LIMIT 10;
+    SELECT * FROM log WHERE user_id =#{userId} AND res_type_id = #{resTypeId}  ORDER BY click_time DESC LIMIT 5;
   </select>
 </mapper>
